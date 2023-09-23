@@ -11,4 +11,4 @@ cluster/create:
 cluster/bundle:
 	k3d cluster delete -c k3d.yaml
 	k3d cluster create -c k3d.yaml
-	uds bundle deploy uds-bundle-uds-core-amd64-0.0.1.tar.zst
+	uds bundle deploy uds-bundle-uds-core-amd64-0.0.1.tar.zst --confirm
