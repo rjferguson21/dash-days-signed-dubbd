@@ -11,7 +11,7 @@ kyverno:
               template:
                 spec:
                   containers:
-                    - image: bitnami/configurable-http-proxy
+                    - image: registry1.dso.mil/ironbank/opensource/jupyterhub/configurable-http-proxy:4.6.0
                       name: proxy
                       command:
                         - "configurable-http-proxy"

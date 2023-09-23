@@ -17,4 +17,5 @@ components:
               - name: REGISTRY_TOKEN
                 # marks this variable as sensitive to prevent it from being output in the Zarf log
                 sensitive: true
-      
+    images:
+      - registry1.dso.mil/ironbank/opensource/jupyterhub/configurable-http-proxy:4.6.0
