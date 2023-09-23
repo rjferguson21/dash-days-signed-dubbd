@@ -19,11 +19,12 @@ zarf-packages:
     repository: ghcr.io/defenseunicorns/packages/metallb
     ref: 0.0.1
 
+  # Hack to get zarf-pull password
   - name: pullcreds
     path: .
     ref: 0.0.1
 
-  # Defense Unicorns Big Bang Distro
+  # Defense Unicorns Big Bang Distro (plus signatures and attestations)
   - name: dubbd-k3d
     repository: ghcr.io/rjferguson21/dubbd-signed/dubbd-k3d
     ref: 0.9.1
