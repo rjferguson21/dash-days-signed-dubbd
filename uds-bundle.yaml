@@ -25,5 +25,5 @@ zarf-packages:
 
   # Defense Unicorns Big Bang Distro
   - name: dubbd-k3d
-    path: .
+    repository: ghcr.io/rjferguson21/dubbd-signed/dubbd-k3d
     ref: 0.9.1
