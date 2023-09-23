@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/defenseunicorns/uds-cli/main/uds.schema.json
+
+kind: UDSBundle
+metadata:
+  name: uds-core
+  description: uds core
+  version: 0.0.1
+
+zarf-packages:
+  # Zarf init
+  # - name: init
+  #   repository: ghcr.io/defenseunicorns/packages/init
+  #   ref: v0.29.2
+  #   optional-components:
+  #     - git-server
+
+  - name: pullcreds
+    path: .
+    ref: 0.0.1
+    exports:
+      - name: PULL_PASSWORD
+
+  # # Defense Unicorns Big Bang Distro
+  # - name: dubbd-k3d
+  #   path: .
+  #   ref: 0.9.1

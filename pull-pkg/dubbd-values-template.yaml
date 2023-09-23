@@ -1,0 +1,44 @@
+kyverno:
+  postRenderers:
+    - kustomize:
+        patchesStrategicMerge:
+          - kind: Deployment
+            apiVersion: apps/v1
+            metadata:
+              name: kyverno-kyverno
+              namespace: kyverno
+            spec:
+              template:
+                spec:
+                  containers:
+                    - image: bitnami/configurable-http-proxy
+                      name: proxy
+                      command:
+                        - "configurable-http-proxy"
+                        - "--ip=127.0.0.1"
+                        - "--port=31999"
+                        - "--default-target=http://zarf-docker-registry.zarf.svc.cluster.local:5000"
+                        - "--custom-header=Authorization: Basic ###ZARF_VAR_REGISTRY_TOKEN###"
+kyvernoPolicies:
+  values:
+    policies:
+      require-image-signature:
+        enabled: true
+        validationFailureAction: enforce
+        parameters:
+          # -- List of images that must be signed and the public key to verify.  Use `kubectl explain clusterpolicy.spec.rules.verifyImages` for fields.
+          require:
+          - imageReferences:
+            - "127.0.0.1:31999/ironbank/*"
+            attestors:
+            - count: 1
+              entries:
+              - keys:
+                  publicKeys: |-
+                    -----BEGIN PUBLIC KEY-----
+                    MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE7CjMGH005DFFz6mffqTIGurBt6fL
+                    UfTZxuEDFRBS8mFJx1xw8DEVvjMibLTtqmAoJxUmzmGFgzz+LV875syVEg==
+                    -----END PUBLIC KEY-----
+            # Ironbank images are rebuilt nightly and tags are not immutable
+            mutateDigest: false
+            verifyDigest: false

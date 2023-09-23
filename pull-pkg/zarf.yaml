@@ -1,0 +1,20 @@
+kind: ZarfPackageConfig
+metadata:
+  name: pullcreds
+  version: 0.0.1
+
+components:
+  - name: pull
+    required: true
+    files:
+      - source: dubbd-values-template.yaml
+        target: deploy-dubbd-values.yaml
+    actions:
+      onDeploy:
+        before:
+          - cmd: echo -n zarf-pull:$(kubectl get secret zarf-state -n zarf -o=jsonpath='{.data.state}' | base64 -d | jq -r '.registryInfo.pullPassword') | base64 
+            setVariables:
+              - name: REGISTRY_TOKEN
+                # marks this variable as sensitive to prevent it from being output in the Zarf log
+                sensitive: true
+      
